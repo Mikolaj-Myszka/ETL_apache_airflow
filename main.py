@@ -10,22 +10,28 @@ import sqlite3
 
 DATABASE_LOCATION = "sqlite://my_played_tracks.sqlite" # call it whatever we like
 USER_ID = "miko_zit"
-TOKEN = "BQDqoUXlWpAuMuWfmHplEWZVivl8TMG3uSiHHtQIeAZtJL931hmDMuFN9SfTd-EVpHB4zcDmKf61gN-o4iKsswkzu3tCR7LCySVZXIlh1dEpy2CflbqqKzEUoSVk_3MR3XN7BpcY7Zufzg"
+TOKEN = "BQC6iD6MTevzXVlk0SIZbZBdzZta_20yUqznBR75finA1zV6a-FuJkb9D186KHe7OYEKVSRHAm5nkCtF42LTCo3udzMm-N9idjvLUyf4w1Ce0Ryz_2O9__gL5LBZ_wXIIB2kmD6ME80feA"
 
 
 
 ### Validation function
-def check_if_data_is_valid(df: pd.Dataframe) -> bool:
+def check_if_data_is_valid(df: pd.DataFrame) -> bool:
     # Check if dataframe is empty
     if df.empty:
-        print("No genres downloaded. Finishing execution")
+        print("No genres downloaded. Finishing execution.")
         return False
     
     # Primary Key Check
-    if pd.Series(df['genre']).is_unique:
+    if pd.Series(df['genres']).is_unique:
         pass
     else:
-        raise Exception("Primary Key check is violated")
+        raise Exception("Primary Key check is violated.")
+    
+    # Check for nulls
+    if df.isnull().values.any():
+        raise Exception("Null values found.")
+
+    return True
 
 
 if __name__ == "__main__":
@@ -69,5 +75,33 @@ if __name__ == "__main__":
     genres_df = pd.DataFrame(genres_dict)
     print(genres_df)
 
+
+    # Validate
+    if check_if_data_is_valid(genres_df):
+        print("Data valid, proceed to Load stage")
+    
+
+    # Load
+    engine = sqlalchemy.create_engine(DATABASE_LOCATION)
+    conn = sqlite3.connect('my_played_tracks.sqlite')
+    cursor = conn.cursor()
+
+    sql_query = """
+    CREATE TABLE IF NOT EXIST my_played_tracks(
+        genres VARCHAR(200),
+        CONSTRAINT primary_key_constraint PRIMARY KEY (genres)
+    )
+    """
+
+    cursor.execute(sql_query)
+    print("Opened database successfully")
+
+    try:
+        genres_df.to_sql("my_played_tracks", engine, index=False, if_exists='append')
+    except:
+        print("Data already exists in the database")
+
+    conn.close()
+    print("Closed database successfully")
 
 
