@@ -8,12 +8,6 @@ import datetime
 import sqlite3
 
 
-DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite" # we call it whatever we like
-USER_ID = "miko_zit"
-TOKEN = "BQDaP_cNQ9D7CZiE7yewYJeLU3fqEPIu995Yz0UW7sLQ_3cwLE-rPdm46RGKNS1YjVeXdOl90uR819PZJclru7kj4W3E8l45zFnjTnjg9Shk0kYvFWgbjSSBEvPp92JLXNYtC480s30M1g"
-
-
-
 ### Validation function
 def check_if_data_is_valid(df: pd.DataFrame) -> bool:
     # Check if dataframe is empty
@@ -34,8 +28,13 @@ def check_if_data_is_valid(df: pd.DataFrame) -> bool:
     return True
 
 
+def run_spotify_etl():
 
-if __name__ == "__main__":
+    # Should be lowercase as now these variables are not global
+    DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite" # we call it whatever we like
+    USER_ID = "miko_zit"
+    TOKEN = "BQCOopHC93Y912hFkF7NRJw5w95BHYNpnx5MmQAlSoF5TmUlswAJMLoDZJ9tVm8mNGB0ZKAZ5bsrVO0UIMJgFsr-nBD5jol4C8F0lEH6NcSB14UwBpjiJjPjNPY1gozbrXfvMgk8kA7agw"
+
 
     headers = {
         "Accept": "application/json",
@@ -104,5 +103,3 @@ if __name__ == "__main__":
 
     conn.close()
     print("Closed database successfully")
-
-
