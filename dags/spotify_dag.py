@@ -25,6 +25,7 @@ dag = DAG(
 )
 
 
+# It's just for testing
 def just_a_function():
     print("Just testing :)")
 
@@ -38,3 +39,6 @@ run_etl = PythonOperator(
 
 
 run_etl
+
+
+# t1 >> [t2, t3]

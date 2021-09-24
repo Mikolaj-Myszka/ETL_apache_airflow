@@ -33,7 +33,7 @@ def run_spotify_etl():
     # Should be lowercase as now these variables are not global
     DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite" # we call it whatever we like
     USER_ID = "miko_zit"
-    TOKEN = "BQCOopHC93Y912hFkF7NRJw5w95BHYNpnx5MmQAlSoF5TmUlswAJMLoDZJ9tVm8mNGB0ZKAZ5bsrVO0UIMJgFsr-nBD5jol4C8F0lEH6NcSB14UwBpjiJjPjNPY1gozbrXfvMgk8kA7agw"
+    TOKEN = "BQA-MXyHKEWKH_l9ZWOvDPUHwRMitwtyLYhZT4ZTnBksRah97E_RnMt4xWWforC46-i3W_16p4FHpcGdwwxyxcBBmdk9DgpK_oqz2CjoW-pJTINvC9Fsq_6635UtwsB2HtpPynbAnUzCGg"
 
 
     headers = {
